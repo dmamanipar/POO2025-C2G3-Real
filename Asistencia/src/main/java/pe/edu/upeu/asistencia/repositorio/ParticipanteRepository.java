@@ -2,20 +2,20 @@ package pe.edu.upeu.asistencia.repositorio;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
-import pe.edu.upeu.asistencia.modelo.Estudiante;
+import pe.edu.upeu.asistencia.modelo.Participante;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EstudianteRepository {
-    public List<Estudiante> estudiantes=new ArrayList<>();
+public class ParticipanteRepository {
+    public List<Participante> participantes =new ArrayList<>();
 
-   public List<Estudiante> findAllEstudiantes(){
-        estudiantes.add(new Estudiante(
+   public List<Participante> findAll(){
+        participantes.add(new Participante(
                 new SimpleStringProperty("Juan"),
                 new SimpleBooleanProperty(true)
                 )
         );
-        return estudiantes;
+        return participantes;
     }
 }
