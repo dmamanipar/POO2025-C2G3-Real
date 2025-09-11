@@ -30,7 +30,7 @@ public class ParticipanteController {
     @Autowired
     ParticipanteServicioI ps;
     @FXML TextField txtDni, txtNombres, txtApellidos;
-
+    int indexE=-1;
     @FXML
     public void initialize() {
         cbxCarrera.getItems().setAll(Carrera.values());
@@ -57,7 +57,8 @@ public class ParticipanteController {
                 Button btnEliminar = new Button("Eliminar");
                     {
                         btnEditar.setOnAction((event) -> {
-                            System.out.println("Editando participante");
+                            Participante participante =  getTableView().getItems().get(getIndex());
+                            editarParticipante(participante, getIndex());
                         });
                         btnEliminar.setOnAction((event) -> {
                             eliminarParticipante(getIndex());
@@ -77,7 +78,14 @@ public class ParticipanteController {
                 };
         opcionCol.setCellFactory(cellFactory);
     }
-
+    public void editarParticipante(Participante p, int index){
+        txtDni.setText(p.getDni().getValue());
+        txtNombres.setText(p.getNombre().getValue());
+        txtApellidos.setText(p.getApellidos().getValue());
+        cbxCarrera.getSelectionModel().select(p.getCarrera());
+        cbxTipoParticipante.getSelectionModel().select(p.getTipoParticipante());
+        indexE=index;
+    }
     public void listarParticipantes(){
         dniCol.setCellValueFactory(cellData ->
                 cellData.getValue().getDni());
@@ -102,9 +110,26 @@ public class ParticipanteController {
         participante.setApellidos(new SimpleStringProperty(txtApellidos.getText()));
         participante.setCarrera(cbxCarrera.getValue());
         participante.setTipoParticipante(cbxTipoParticipante.getValue());
-        ps.save(participante);
+        if(indexE==-1){
+            ps.save(participante);
+        }else{
+            ps.update(participante, indexE);
+            indexE=-1;
+        }
+        limpiarFormulario();
         listarParticipantes();
     }
+
+    public void limpiarFormulario(){
+        txtDni.setText("");
+        txtNombres.setText("");
+        txtApellidos.setText("");
+        cbxCarrera.getSelectionModel().clearSelection();
+        cbxTipoParticipante.getSelectionModel().clearSelection();
+    }
+
+
+
     public void eliminarParticipante(int index){
         ps.delete(index);
         listarParticipantes();
