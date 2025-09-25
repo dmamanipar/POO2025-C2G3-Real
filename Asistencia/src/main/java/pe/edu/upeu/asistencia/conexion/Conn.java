@@ -29,7 +29,7 @@ public class Conn {
         }
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
        Connection con= getConexion();
         PreparedStatement pst=null;
         ResultSet rs=null;
@@ -43,7 +43,7 @@ public class Conn {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
 
 
